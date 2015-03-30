@@ -1,0 +1,21 @@
+﻿#leftsidebar {
+    position:absolute;
+    left:0; top:92px; bottom: 0;
+    width: 178px;
+}
+#tabs {
+    position: absolute;
+    left:0px; top:0px; right:0; bottom:0;
+}
+#btnAddJoinGroup{
+    position: relative;
+    left:0px; top:25px;
+}
+#addEvent{
+
+  width:auto;
+
+}
+.checkboxR/*ow td{
+    width: 10px;
+}*/
