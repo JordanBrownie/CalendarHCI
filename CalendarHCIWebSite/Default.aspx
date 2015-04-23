@@ -21,7 +21,6 @@
 
 
     <script>
-        var testPush;
         var MyCalendarEvents = {events:[
                         {
                             title: 'All Day Event',
