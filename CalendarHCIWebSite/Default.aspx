@@ -22,62 +22,66 @@
 
     <script>
 
+        var months = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+        ];
+
         var MyCalendarEvents = {events:[
                         {
                             title: 'All Day Event',
-                            start: '2015-02-01'
+                            start: '2015-04-01'
 
                         },
 
                         {
                             title: 'Long Event',
-                            start: '2015-02-07',
-                            end: '2015-02-10'
+                            start: '2015-04-07',
+                            end: '2015-04-10'
                         },
                         {
                             id: 999,
                             title: 'Repeating Event',
-                            start: '2015-02-09T16:00:00'
+                            start: '2015-04-09T16:00:00'
                         },
                         {
                             id: 999,
                             title: 'Repeating Event',
-                            start: '2015-02-16T16:00:00'
+                            start: '2015-04-16T16:00:00'
                         },
                         {
                             title: 'Conference',
-                            start: '2015-02-11',
-                            end: '2015-02-13'
+                            start: '2015-04-11',
+                            end: '2015-04-13'
                         },
                         {
                             title: 'Meeting',
-                            start: '2015-02-12T10:30:00',
-                            end: '2015-02-12T12:30:00'
+                            start: '2015-04-12T10:30:00',
+                            end: '2015-04-12T12:30:00'
                         },
                         {
                             title: 'Lunch',
-                            start: '2015-02-12T12:00:00'
+                            start: '2015-04-12T12:00:00'
                         },
                         {
                             title: 'Meeting',
-                            start: '2015-02-12T14:30:00'
+                            start: '2015-04-12T14:30:00'
                         },
                         {
                             title: 'Happy Hour',
-                            start: '2015-02-12T17:30:00'
+                            start: '2015-04-12T17:30:00'
                         },
                         {
                             title: 'Dinner',
-                            start: '2015-02-12T20:00:00'
+                            start: '2015-04-12T20:00:00'
                         },
                         {
                             title: 'Birthday Party',
-                            start: '2015-02-13T07:00:00'
+                            start: '2015-04-13T07:00:00'
                         },
                         {
                             title: 'Click for Google',
                             url: 'http://google.com/',
-                            start: '2015-02-28'
+                            start: '2015-04-28'
                         }
         ],
         color: 'red',}
@@ -140,6 +144,7 @@
                         }
         ]
         function addMyCalendar(eventObject) {
+            var d = new Date();
             $('#myCalendar').fullCalendar({
                 theme: true,
                 header: {
@@ -147,17 +152,24 @@
                     center: 'title',
                     right: 'month,basicWeek,basicDay'
                 },
-                defaultDate: '2015-02-12',
+                year: d.getFullYear(),
+                month: d.getMonth(),
+                day: d.getDate(),
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
                 events: eventObject,
                 height: 475,
                 aspectRatio: 1,
             });
+            
+            $(".fc-today-button").text("Today");
+            $(".fc-prev-button").text("Previous");
+            $(".fc-next-button").text("Next");
         };
 
 
         function addTestCalendar(eventObject) {
+            var d = new Date();
             $('#testCalendar').fullCalendar({
                 theme: true,
                 header: {
@@ -165,13 +177,18 @@
                     center: 'title',
                     right: 'month,basicWeek,basicDay'
                 },
-                defaultDate: '2015-03-19',
+                year: d.getFullYear(),
+                month: d.getMonth(),
+                day: d.getDate(),
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
                 events: eventObject,
                 height: 475,
                 aspectRatio: 1,
             });
+            $(".fc-today-button").text("Today");
+            $(".fc-prev-button").text("Previous");
+            $(".fc-next-button").text("Next");
         };
         $(document).ready(function () {
 
@@ -189,7 +206,7 @@
             //$("#myCalendar").css({ "padding-left": "10%", "padding-right": "5%", "padding-top": "5%" });
             $('#leftsidebar').css({ "float": "left", });
             $('#tabs').css({ "padding-left": "10%", "float": "right" })
-
+            
             addMyCalendar(MyCalendarEvents);
             addTestCalendar(TestCalendarEvents);
             $(function () {
@@ -219,18 +236,7 @@
                 });
             });
 
-            function buildMyCalendar() {
-                ('#myCalendar').fullCalendar('destroy');
-                ('#testCalendar').fullCalendar('destroy');
-                addMyCalendar(MyCalendarEvents);
-            };
-
-            function buildTestCalendar() {
-
-                ('#myCalendar').fullCalendar('destroy');
-                ('#testCalendar').fullCalendar('destroy');
-                addTestCalendar(TestCalendarEvents);
-            };
+            
 
             $("#btnAddEventInfo").click(function () {
                 //var $tabs = $('#tabs').tabs();
@@ -250,6 +256,18 @@
 
         });
 
+        function buildMyCalendar() {
+            ('#myCalendar').fullCalendar('destroy');
+            ('#testCalendar').fullCalendar('destroy');
+            addMyCalendar(MyCalendarEvents);
+        };
+
+        function buildTestCalendar() {
+
+            ('#myCalendar').fullCalendar('destroy');
+            ('#testCalendar').fullCalendar('destroy');
+            addTestCalendar(TestCalendarEvents);
+        };
         
     </script>
     <title></title>
