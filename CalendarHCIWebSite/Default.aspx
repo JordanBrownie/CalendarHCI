@@ -21,7 +21,7 @@
 
 
     <script>
-
+        var testPush;
         var MyCalendarEvents = {events:[
                         {
                             title: 'All Day Event',
@@ -140,6 +140,7 @@
                         }
         ]
         function addMyCalendar(eventObject) {
+            var currentDate = new Date;
             $('#myCalendar').fullCalendar({
                 theme: true,
                 header: {
@@ -147,7 +148,7 @@
                     center: 'title',
                     right: 'month,basicWeek,basicDay'
                 },
-                defaultDate: '2015-02-12',
+                defaultDate: currentDate.toLocaleDateString(),
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
                 events: eventObject,
@@ -158,6 +159,7 @@
 
 
         function addTestCalendar(eventObject) {
+            var currentDate = new Date;
             $('#testCalendar').fullCalendar({
                 theme: true,
                 header: {
@@ -165,7 +167,7 @@
                     center: 'title',
                     right: 'month,basicWeek,basicDay'
                 },
-                defaultDate: '2015-03-19',
+                defaultDate: currentDate.toLocaleDateString(),
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
                 events: eventObject,
@@ -194,6 +196,8 @@
             addTestCalendar(TestCalendarEvents);
             $(function () {
                 $("#tabs").tabs();
+                $("#logTab").css({ "float": "right" });
+                $("#logTab").button();
             });
             $(function () {
                 $("#dialog").dialog();
@@ -261,6 +265,7 @@
             <li><a href="#myCalendar" onclick="buildMyCalendar()">My Calendar</a></li>
             <li><a href="#testCalendar" onclick="buildTestCalendar()">Test Calendar</a></li>
             <li><a href="#tabs-3">Aenean lacinia</a></li>
+            <li id="logTab"><a href="#LogStatus" onclick="logStatus()">Log in</a></li>
         </ul>
 
         <div id="myCalendar"></div>
