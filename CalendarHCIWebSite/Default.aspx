@@ -424,24 +424,7 @@
                 
                     <input type="checkbox" value="Sunday" />Sunday
                 
-            
-<<<<<<< HEAD
-            <br />
-        <br />
-        <%--Duration--%>
 
-        <select id="duration" style="visibility: hidden">
-            <option value="Custom">Custom</option>
-            <option value="Spring Semester">Spring Semester</option>
-            <option value="Fall Semester">Fall Semester</option>
-            <option value="Summer Semester">Summer Semester</option>
-        </select>
-
-        <br />
-        <br />
-        <div>
-            Start Date:
-=======
             <br /><br />
         Duration
                 
@@ -455,7 +438,7 @@
         <br /><br />
         <div id="customDate">
         Start Date:
->>>>>>> origin/master
+
                 
                     <input id="startDate" type="date" />
             End Date
