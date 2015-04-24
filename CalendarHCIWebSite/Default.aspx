@@ -26,76 +26,78 @@
   "July", "August", "September", "October", "November", "December"
         ];
 
-        var MyCalendarEvents = {events:[
-                        {
-                            title: 'All Day Event',
-                            start: '2015-04-01',
-                            location: 'Avery'
-                        },
+        var MyCalendarEvents = {
+            events: [
+                            {
+                                title: 'All Day Event',
+                                start: '2015-04-01',
+                                location: 'Avery'
+                            },
 
-                        {
-                            title: 'Long Event',
-                            start: '2015-04-07',
-                            end: '2015-04-10',
-                            location: 'Avery'
-                        },
-                        {
-                            id: 999,
-                            title: 'Repeating Event',
-                            start: '2015-04-09T16:00:00',
-                            location: 'Avery'
-                        },
-                        {
-                            id: 999,
-                            title: 'Repeating Event',
-                            start: '2015-04-16T16:00:00',
-                            location: 'Avery'
-                        },
-                        {
-                            title: 'Conference',
-                            start: '2015-04-11',
-                            end: '2015-04-13',
-                            location: 'Avery'
-                        },
-                        {
-                            title: 'Meeting',
-                            start: '2015-04-12T10:30:00',
-                            end: '2015-04-12T12:30:00',
-                            location: 'Avery'
-                        },
-                        {
-                            title: 'Lunch',
-                            start: '2015-04-12T12:00:00',
-                            location: 'Avery'
-                        },
-                        {
-                            title: 'Meeting',
-                            start: '2015-04-12T14:30:00',
-                            location: 'Avery'
-                        },
-                        {
-                            title: 'Happy Hour',
-                            start: '2015-04-12T17:30:00',
-                            location: 'Avery'
-                        },
-                        {
-                            title: 'Dinner',
-                            start: '2015-04-12T20:00:00',
-                            location: 'Avery'
-                        },
-                        {
-                            title: 'Birthday Party',
-                            start: '2015-04-13T07:00:00',
-                            location: 'Avery'
-                        },
-                        {
-                            title: 'Click for Google',
-                            url: 'http://google.com/',
-                            start: '2015-04-28',
-                            location: 'Avery'
-                        }
-        ],
-        color: 'red',}
+                            {
+                                title: 'Long Event',
+                                start: '2015-04-07',
+                                end: '2015-04-10',
+                                location: 'Avery'
+                            },
+                            {
+                                id: 999,
+                                title: 'Repeating Event',
+                                start: '2015-04-09T16:00:00',
+                                location: 'Avery'
+                            },
+                            {
+                                id: 999,
+                                title: 'Repeating Event',
+                                start: '2015-04-16T16:00:00',
+                                location: 'Avery'
+                            },
+                            {
+                                title: 'Conference',
+                                start: '2015-04-11',
+                                end: '2015-04-13',
+                                location: 'Avery'
+                            },
+                            {
+                                title: 'Meeting',
+                                start: '2015-04-12T10:30:00',
+                                end: '2015-04-12T12:30:00',
+                                location: 'Avery'
+                            },
+                            {
+                                title: 'Lunch',
+                                start: '2015-04-12T12:00:00',
+                                location: 'Avery'
+                            },
+                            {
+                                title: 'Meeting',
+                                start: '2015-04-12T14:30:00',
+                                location: 'Avery'
+                            },
+                            {
+                                title: 'Happy Hour',
+                                start: '2015-04-12T17:30:00',
+                                location: 'Avery'
+                            },
+                            {
+                                title: 'Dinner',
+                                start: '2015-04-12T20:00:00',
+                                location: 'Avery'
+                            },
+                            {
+                                title: 'Birthday Party',
+                                start: '2015-04-13T07:00:00',
+                                location: 'Avery'
+                            },
+                            {
+                                title: 'Click for Google',
+                                url: 'http://google.com/',
+                                start: '2015-04-28',
+                                location: 'Avery'
+                            }
+            ],
+            color: 'red',
+        }
         ;
         var selectedTest = "";
         var TestCalendarEvents = [
@@ -183,7 +185,7 @@
                 aspectRatio: 1,
                 eventRender: eventInfo,
             });
-            
+
             $(".fc-today-button").text("Today");
             $(".fc-prev-button").text("Previous");
             $(".fc-next-button").text("Next");
@@ -238,13 +240,12 @@
             //$("#myCalendar").css({ "padding-left": "10%", "padding-right": "5%", "padding-top": "5%" });
             $('#leftsidebar').css({ "float": "left", });
             $('#tabs').css({ "padding-left": "10%", "float": "right" })
-            
+
             addMyCalendar(MyCalendarEvents);
             addTestCalendar(TestCalendarEvents);
             $(function () {
                 $("#tabs").tabs();
-                $("#logTab").css({ "float": "right" });
-                $("#logTab").button();
+
             });
             $(function () {
                 $("#dialog").dialog();
@@ -270,23 +271,68 @@
                 });
             });
 
-            
+
 
             $("#btnAddEventInfo").click(function () {
                 //var $tabs = $('#tabs').tabs();
                 var selectedText = $('#tabs .ui-tabs-active').find('.ui-tabs-anchor')[0].innerHTML;
                 var eventName = $('#eventName').val();
                 var startDate = $('#startDate').val();
+                var startTimeEvent = $('#startTimeEvent').val();
+                var endDate = $('#endDate').val();
+                if (startDate > endDate) {
+                    alert("End Date must be after Start Date");
+                    return;
+                }
+                var endTimeEvent = $('#endTimeEvent').val();
                 var location = $("#where").val();
-                MyCalendarEvents.events.push({title:eventName,start:startDate,location:location});
+
+                if (selectedText == 'My Calendar') {
+                    var checkedDays = $('input:checkbox:checked').map(function () { return this.value; }).get();
+                    for (i = 0; i < checkedDays.length; i++) {
+                        var counterDay = moment(startDate);
+                        var testDay = counterDay;
+                        while (counterDay.format("YYYY-MM-DD") < moment(endDate).add(7,'days').format('YYYY-MM-DD')) {
+                            switch (checkedDays[i]) {
+                                case "Sunday":
+                                    testDay = counterDay.day(0).format("YYYY-MM-DD");
+                                    break;
+                                case "Monday":
+                                    testDay = counterDay.day(1).format("YYYY-MM-DD");
+                                    break;
+                                case "Tuesday":
+                                    testDay = counterDay.day(2).format("YYYY-MM-DD");
+                                    break;
+                                case "Wednesday":
+                                    testDay = counterDay.day(3).format("YYYY-MM-DD");
+                                    break;
+                                case "Thursday":
+                                    testDay = counterDay.day(4).format("YYYY-MM-DD");
+                                    break;
+                                case "Friday":
+                                    testDay = counterDay.day(5).format("YYYY-MM-DD");
+                                    break;
+                                case "Saturday":
+                                    testDay = counterDay.day(6).format("YYYY-MM-DD");
+                                    break;
+                            }
+                            if (testDay >= startDate && testDay <= endDate) {
+                                MyCalendarEvents.events.push({ title: eventName, start: testDay + 'T' + startTimeEvent, location: location });
+                            }
+                            counterDay = moment(counterDay).add(1, 'weeks');
+                        }
+
+                    }
+                    //MyCalendarEvents.events.push({ title: eventName, start: startDate + 'T' + startTimeEvent, location: location });
+                    $('#myCalendar').fullCalendar('destroy');
+                    addMyCalendar(MyCalendarEvents);
+                }
+                else if (selectedText == 'Test Calendar') {
+                    TestCalendarEvents.events.push({ title: eventName, start: startDate + 'T' + startTimeEvent, location: location })
+                }
+                //MyCalendarEvents.events.push({title:eventName,start:startDate,location:location});
                 $("#addEvent").dialog("close");
                 //alert(selectedText);
-                if (selectedText = "My Calendar") {
-                    $('#myCalendar').fullCalendar('destroy');
-                    addMyCalendar(MyCalendarEvents)
-                } else {
-
-                }
             })
 
         });
@@ -303,7 +349,7 @@
             ('#testCalendar').fullCalendar('destroy');
             addTestCalendar(TestCalendarEvents);
         };
-        
+
     </script>
     <title></title>
 </head>
@@ -314,7 +360,7 @@
             <li><a href="#myCalendar" onclick="buildMyCalendar()">My Calendar</a></li>
             <li><a href="#testCalendar" onclick="buildTestCalendar()">Test Calendar</a></li>
             <li><a href="#tabs-3">Aenean lacinia</a></li>
-            <li id="logTab"><a href="#LogStatus" onclick="logStatus()">Log in</a></li>
+
         </ul>
 
         <div id="myCalendar"></div>
@@ -331,17 +377,20 @@
 
     <div id="addEvent" title="Add Event">
 
-        <br /><br /> 
+        <br />
+        <br />
         Event Name:<input id="eventName" type="text" value="Event Name" />
 
-        <br /><br />
-        Start Time:<input id="startTime" type="time" value="Start Time" />End Time:<input id="endTime" type="time" value="End Time" />
+        <br />
+        <br />
+        Start Time:<input id="startTimeEvent" type="time" value="Start Time" />End Time:<input id="endTimeEvent" type="time" value="End Time" />
 
-        <br /><br />
+        <br />
+        <br />
         Repeats Every:
            
                 <br />
-                    <input type="checkbox" value="Monday" />Monday
+        <input type="checkbox" value="Monday" />Monday
                 
                     <input type="checkbox" value="Tuesday" />Tuesday
                 
@@ -352,48 +401,54 @@
                     <input type="checkbox" value="Friday" />Friday
                 
             
-            <br /><br />
+            <br />
+        <br />
 
         <input type="checkbox" value="Saturday" />Saturday
                 
                     <input type="checkbox" value="Sunday" />Sunday
                 
             
-            <br /><br />
-        Duration
-                
-                    <select id="duration">
-                        <option value="Custom">Custom</option>
-                        <option value="Spring Semester">Spring Semester</option>
-                        <option value="Fall Semester">Fall Semester</option>
-                        <option value="Summer Semester">Summer Semester</option>
-                    </select>
+            <br />
+        <br />
+        <%--Duration--%>
 
-        <br /><br />
-        <div style="display:none;">
-        Start Date:
+        <select id="duration" style="visibility: hidden">
+            <option value="Custom">Custom</option>
+            <option value="Spring Semester">Spring Semester</option>
+            <option value="Fall Semester">Fall Semester</option>
+            <option value="Summer Semester">Summer Semester</option>
+        </select>
+
+        <br />
+        <br />
+        <div>
+            Start Date:
                 
                     <input id="startDate" type="date" />
-        End Date
+            End Date
                 
                     <input id="endDate" type="date" />
         </div>
-        <br /><br />
+        <br />
+        <br />
         Where
                 
-                    <input id= "where" type="text" />
+                    <input id="where" type="text" />
 
-        <br /><br />
+        <br />
+        <br />
 
-     <%--   <button id="btnCancelEvent">Cancel</button>--%>
+        <%--   <button id="btnCancelEvent">Cancel</button>--%>
 
-        <button id="btnAddEventInfo" style="float:right">Add Event</button>
+        <button id="btnAddEventInfo" style="float: right">Add Event</button>
 
 
     </div>
 
-    <div id="eventContent" title="Event Details" style="display:none;">
-        Start: <span id="startTime"></span><br>
+    <div id="eventContent" title="Event Details" style="display: none;">
+        Start: <span id="startTime"></span>
+        <br>
         <!--End: <span id="endTime"></span><br><br>-->
         <p id="location"></p>
     </div>
