@@ -30,13 +30,17 @@
             events: [
                             {
                                 title: 'All Day Event',
-                                start: '2015-04-01',
+
+                                start: '2015-04-01T16:00:00',
+
                                 location: 'Avery'
                             },
 
                             {
                                 title: 'Long Event',
-                                start: '2015-04-07',
+
+                                start: '2015-04-07T16:00:00',
+
                                 end: '2015-04-10',
                                 location: 'Avery'
                             },
@@ -168,6 +172,19 @@
                             location: 'Avery'
                         }
         ]
+        
+        function eventInfo(event) {
+            var displayText = "";
+            displayText += "Start: " + moment(event.start).format('MMM Do h:mm A') + "<br>";
+            if ( event.end ) {
+                displayText += "End: " + moment(event.end).format('MMM Do h:mm A') + "<br>";
+            }
+            displayText += "Location: " + event.location + "<br>";
+            $("#eventContent").dialog({ modal: true, title: event.title, width: 350 });
+            $("#eventContent").dialog('open');
+            $("#eventContent").dialog().html(displayText);
+        }
+
         function addMyCalendar(eventObject) {
             var currentDate = new Date;
             $('#myCalendar').fullCalendar({
@@ -183,7 +200,7 @@
                 events: eventObject,
                 height: 475,
                 aspectRatio: 1,
-                eventRender: eventInfo,
+                eventClick: eventInfo,
             });
 
             $(".fc-today-button").text("Today");
@@ -206,23 +223,14 @@
                 events: eventObject,
                 height: 475,
                 aspectRatio: 1,
-                eventRender: eventInfo,
+                eventClick: eventInfo,
             });
             $(".fc-today-button").text("Today");
             $(".fc-prev-button").text("Previous");
             $(".fc-next-button").text("Next");
         };
 
-        function eventInfo(event, element) {
-            element.attr('href', 'javascript:void(0);');
-            element.click(function () {
-                $("#startTime").html(moment(event.start).format('MMM Do h:mm A'));
-                $("#endTime").html(moment(event.end).format('MMM Do h:mm A'));
-                $("#location").html("Location: " + event.location);
-
-                $("#eventContent").dialog({ modal: true, title: event.title, width: 350 });
-            });
-        };
+        
 
         $(document).ready(function () {
 
@@ -267,6 +275,14 @@
 
                 $("#btnAddEvent").click(function () {
                     $("#addEvent").dialog("open");
+                    $("#customDate").hide();
+                    $("#duration").change(function () {
+                        if ("Custom" == $("#duration").val()) {
+                            $("#customDate").show();
+                        } else {
+                            $("#customDate").hide();
+                        }
+                    });
                     var selectedText = $('#tabs .ui-tabs-active').find('.ui-tabs-anchor')[0].innerHTML;
                 });
             });
@@ -409,6 +425,7 @@
                     <input type="checkbox" value="Sunday" />Sunday
                 
             
+<<<<<<< HEAD
             <br />
         <br />
         <%--Duration--%>
@@ -424,6 +441,21 @@
         <br />
         <div>
             Start Date:
+=======
+            <br /><br />
+        Duration
+                
+                    <select id="duration">
+                        <option value="Spring Semester">Spring Semester</option>
+                        <option value="Fall Semester">Fall Semester</option>
+                        <option value="Summer Semester">Summer Semester</option>
+                        <option value="Custom" id="custom">Custom</option>
+                    </select>
+
+        <br /><br />
+        <div id="customDate">
+        Start Date:
+>>>>>>> origin/master
                 
                     <input id="startDate" type="date" />
             End Date
@@ -446,10 +478,16 @@
 
     </div>
 
+<<<<<<< HEAD
     <div id="eventContent" title="Event Details" style="display: none;">
         Start: <span id="startTime"></span>
         <br>
         <!--End: <span id="endTime"></span><br><br>-->
+=======
+    <div id="eventContent" title="Event Details" style="display:none;">
+        Start: <span id="startTime"></span><br>
+        End: <span id="endTime"></span><br><br>
+>>>>>>> origin/master
         <p id="location"></p>
     </div>
 
