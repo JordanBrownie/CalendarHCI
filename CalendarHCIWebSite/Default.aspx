@@ -21,11 +21,14 @@
 
 
     <script>
+<<<<<<< HEAD
 
         var months = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
         ];
 
+=======
+>>>>>>> origin/master
         var MyCalendarEvents = {events:[
                         {
                             title: 'All Day Event',
@@ -167,7 +170,11 @@
                         }
         ]
         function addMyCalendar(eventObject) {
+<<<<<<< HEAD
             var d = new Date();
+=======
+            var currentDate = new Date;
+>>>>>>> origin/master
             $('#myCalendar').fullCalendar({
                 theme: true,
                 header: {
@@ -175,9 +182,13 @@
                     center: 'title',
                     right: 'month,basicWeek,basicDay'
                 },
+<<<<<<< HEAD
                 year: d.getFullYear(),
                 month: d.getMonth(),
                 day: d.getDate(),
+=======
+                defaultDate: currentDate.toLocaleDateString(),
+>>>>>>> origin/master
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
                 events: eventObject,
@@ -192,7 +203,11 @@
         };
 
         function addTestCalendar(eventObject) {
+<<<<<<< HEAD
             var d = new Date();
+=======
+            var currentDate = new Date;
+>>>>>>> origin/master
             $('#testCalendar').fullCalendar({
                 theme: true,
                 header: {
@@ -200,9 +215,13 @@
                     center: 'title',
                     right: 'month,basicWeek,basicDay'
                 },
+<<<<<<< HEAD
                 year: d.getFullYear(),
                 month: d.getMonth(),
                 day: d.getDate(),
+=======
+                defaultDate: currentDate.toLocaleDateString(),
+>>>>>>> origin/master
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
                 events: eventObject,
@@ -247,6 +266,8 @@
             addTestCalendar(TestCalendarEvents);
             $(function () {
                 $("#tabs").tabs();
+                $("#logTab").css({ "float": "right" });
+                $("#logTab").button();
             });
             $(function () {
                 $("#dialog").dialog();
@@ -316,6 +337,7 @@
             <li><a href="#myCalendar" onclick="buildMyCalendar()">My Calendar</a></li>
             <li><a href="#testCalendar" onclick="buildTestCalendar()">Test Calendar</a></li>
             <li><a href="#tabs-3">Aenean lacinia</a></li>
+            <li id="logTab"><a href="#LogStatus" onclick="logStatus()">Log in</a></li>
         </ul>
 
         <div id="myCalendar"></div>
