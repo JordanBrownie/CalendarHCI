@@ -294,17 +294,41 @@
                 var selectedText = $('#tabs .ui-tabs-active').find('.ui-tabs-anchor')[0].innerHTML;
                 var eventName = $('#eventName').val();
                 var startDate = $('#startDate').val();
-                var startTimeEvent = $('#startTimeEvent').val();
                 var endDate = $('#endDate').val();
+                switch ($("#duration").val()) {
+                    case "Spring Semester":
+                        startDate = "2016-01-11";
+                        endDate = "2016-05-06";
+                        break;
+                    case "Fall Semester":
+                        startDate = "2015-08-24";
+                        endDate = "2015-12-18";
+                        break;
+                    case "Summer Semester":
+                        startDate = "2015-05-18";
+                        endDate = "2015-08-13";
+                        break;
+                    default:
+                        startDate = $('#startDate').val();
+                        endDate = $('#endDate').val();
+                        break;
+                }
+                
                 if (startDate > endDate) {
                     alert("End Date must be after Start Date");
                     return;
                 }
+
+                var startTimeEvent = $('#startTimeEvent').val();
                 var endTimeEvent = $('#endTimeEvent').val();
                 var location = $("#where").val();
 
                 if (selectedText == 'My Calendar') {
                     var checkedDays = $('input:checkbox:checked').map(function () { return this.value; }).get();
+                    if (checkedDays.length == 0) {
+                        alert("For events occuring once please select they day and Custom Duration: This feature not yet implemented");
+                        return;
+                    }
                     for (i = 0; i < checkedDays.length; i++) {
                         var counterDay = moment(startDate);
                         var testDay = counterDay;
@@ -344,7 +368,50 @@
                     addMyCalendar(MyCalendarEvents);
                 }
                 else if (selectedText == 'Test Calendar') {
-                    TestCalendarEvents.events.push({ title: eventName, start: startDate + 'T' + startTimeEvent, location: location })
+                    //TestCalendarEvents.events.push({ title: eventName, start: startDate + 'T' + startTimeEvent, location: location })
+                    var checkedDays = $('input:checkbox:checked').map(function () { return this.value; }).get();
+                    if (checkedDays.length == 0) {
+                        alert("For events occuring once please select they day and Custom Duration: This feature not yet implemented");
+                        return;
+                    }
+                    for (i = 0; i < checkedDays.length; i++) {
+                        var counterDay = moment(startDate);
+                        var testDay = counterDay;
+                        while (counterDay.format("YYYY-MM-DD") < moment(endDate).add(7, 'days').format('YYYY-MM-DD')) {
+                            switch (checkedDays[i]) {
+                                case "Sunday":
+                                    testDay = counterDay.day(0).format("YYYY-MM-DD");
+                                    break;
+                                case "Monday":
+                                    testDay = counterDay.day(1).format("YYYY-MM-DD");
+                                    break;
+                                case "Tuesday":
+                                    testDay = counterDay.day(2).format("YYYY-MM-DD");
+                                    break;
+                                case "Wednesday":
+                                    testDay = counterDay.day(3).format("YYYY-MM-DD");
+                                    break;
+                                case "Thursday":
+                                    testDay = counterDay.day(4).format("YYYY-MM-DD");
+                                    break;
+                                case "Friday":
+                                    testDay = counterDay.day(5).format("YYYY-MM-DD");
+                                    break;
+                                case "Saturday":
+                                    testDay = counterDay.day(6).format("YYYY-MM-DD");
+                                    break;
+                            }
+                            if (testDay >= startDate && testDay <= endDate) {
+                                TestCalendarEvents.events.push({ title: eventName, start: testDay + 'T' + startTimeEvent, location: location });
+                            }
+                            counterDay = moment(counterDay).add(1, 'weeks');
+                        }
+
+                    }
+                    //MyCalendarEvents.events.push({ title: eventName, start: startDate + 'T' + startTimeEvent, location: location });
+                    $('#testCalendar').fullCalendar('destroy');
+                    addTestCalendar(MyCalendarEvents);
+
                 }
                 //MyCalendarEvents.events.push({title:eventName,start:startDate,location:location});
                 $("#addEvent").dialog("close");
