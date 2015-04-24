@@ -21,14 +21,11 @@
 
 
     <script>
-<<<<<<< HEAD
 
         var months = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
         ];
 
-=======
->>>>>>> origin/master
         var MyCalendarEvents = {events:[
                         {
                             title: 'All Day Event',
@@ -170,11 +167,7 @@
                         }
         ]
         function addMyCalendar(eventObject) {
-<<<<<<< HEAD
-            var d = new Date();
-=======
             var currentDate = new Date;
->>>>>>> origin/master
             $('#myCalendar').fullCalendar({
                 theme: true,
                 header: {
@@ -182,13 +175,7 @@
                     center: 'title',
                     right: 'month,basicWeek,basicDay'
                 },
-<<<<<<< HEAD
-                year: d.getFullYear(),
-                month: d.getMonth(),
-                day: d.getDate(),
-=======
                 defaultDate: currentDate.toLocaleDateString(),
->>>>>>> origin/master
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
                 events: eventObject,
@@ -203,11 +190,7 @@
         };
 
         function addTestCalendar(eventObject) {
-<<<<<<< HEAD
-            var d = new Date();
-=======
             var currentDate = new Date;
->>>>>>> origin/master
             $('#testCalendar').fullCalendar({
                 theme: true,
                 header: {
@@ -215,13 +198,7 @@
                     center: 'title',
                     right: 'month,basicWeek,basicDay'
                 },
-<<<<<<< HEAD
-                year: d.getFullYear(),
-                month: d.getMonth(),
-                day: d.getDate(),
-=======
                 defaultDate: currentDate.toLocaleDateString(),
->>>>>>> origin/master
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
                 events: eventObject,
