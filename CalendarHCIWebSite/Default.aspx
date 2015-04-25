@@ -33,6 +33,82 @@
         var months = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
         ];
+
+        var groupCalendar = {
+
+            events: [
+                           {
+                               title: 'All Day Event',
+                               start: '2015-04-01T16:00:00',
+                               location: 'Avery'
+                           },
+                           {
+                               title: 'Long Event',
+                               start: '2015-04-07T16:00:00',
+                               end: '2015-04-10',
+                               location: 'Avery'
+                           },
+                           {
+                               id: 999,
+                               title: 'Repeating Event',
+                               start: '2015-04-09T16:00:00',
+                               location: 'Avery'
+                           },
+                           {
+                               id: 999,
+                               title: 'Repeating Event',
+                               start: '2015-04-16T16:00:00',
+                               location: 'Avery'
+                           },
+                           {
+                               title: 'Conference',
+                               start: '2015-04-11',
+                               end: '2015-04-13',
+                               location: 'Avery'
+                           },
+                           {
+                               title: 'Meeting',
+                               start: '2015-04-12T10:30:00',
+                               end: '2015-04-12T12:30:00',
+                               location: 'Avery'
+                           },
+                           {
+                               title: 'Lunch',
+                               start: '2015-04-12T12:00:00',
+                               location: 'Avery'
+                           },
+                           {
+                               title: 'Meeting',
+                               start: '2015-04-12T14:30:00',
+                               location: 'Avery'
+                           },
+                           {
+                               title: 'Happy Hour',
+                               start: '2015-04-12T17:30:00',
+                               location: 'Avery'
+                           },
+                           {
+                               title: 'Dinner',
+                               start: '2015-04-12T20:00:00',
+                               location: 'Avery'
+                           },
+                           {
+                               title: 'Birthday Party',
+                               start: '2015-04-13T07:00:00',
+                               location: 'Avery'
+                           },
+                           {
+                               title: 'Click for Google',
+                               url: 'http://google.com/',
+                               start: '2015-04-28',
+                               location: 'Avery'
+                           }
+            ],
+            color: 'red',
+
+
+        };
+
         var MyCalendarEvents = {
             events: [
                             {
@@ -105,6 +181,17 @@
             color: 'red',
         }
         ;
+
+        var Groups = {
+            groups: [
+                {
+                    groupName: 'Group 1',
+                    description: 'This is a group'
+                }
+            ]
+
+        };
+
          var CSCE378CalendarEvents = {
             events: [
                 {
@@ -271,6 +358,31 @@
             $(".fc-prev-button").text("Previous");
             $(".fc-next-button").text("Next");
         };
+
+        function addGroupCalendar(eventObject) {
+            var currentDate = new Date;
+            $('#groupCalendar').fullCalendar({
+                theme: true,
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                defaultDate: currentDate.toLocaleDateString(),
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: eventObject,
+                height: 475,
+                aspectRatio: 1,
+                eventClick: eventInfo,
+            });
+            $(".fc-today-button").text("Today");
+            $(".fc-prev-button").text("Previous");
+            $(".fc-next-button").text("Next");
+
+
+        };
+
         function addTestCalendar(eventObject) {
             var currentDate = new Date;
             $('#testCalendar').fullCalendar({
@@ -551,6 +663,77 @@
             $("#tabs").tabs("refresh");
             $("#joinGroup").dialog("close");
         })
+
+
+        //$(function () {
+        //    $("#createJoinGroup").dialog({
+        //        autoOpen: false,
+        //        width: "auto",
+        //        show: {
+        //            effect: "blind",
+        //            duration: 1000
+        //        },
+        //        hide: {
+        //            effect: "explode",
+        //            duration: 1000
+        //        }
+        //    });
+
+        //    $('#btnAddJoinGroup').click(function () {
+        //        $("#createJoinGroup").dialog("open");
+        //        $('#selectGroups option').remove();
+        //        var select = document.getElementById('selectGroups')
+        //        //for (var j = 0; j < select.childElementCount; j++) {
+        //        //    select.removeChild(j);
+        //        //}
+
+
+        //        for (var i = 0; i < Groups.groups.length; i++) {
+        //            var opt = document.createElement('option');
+        //            opt.value = Groups.groups[i].groupName;
+        //            opt.innerHTML = Groups.groups[i].groupName;
+        //            select.appendChild(opt);
+        //        }
+        //        //var selectedText = $('#tabs .ui-tabs-active').find('.ui-tabs-anchor')[0].innerHTML;
+
+        //    });
+
+        //});
+        //$(function () {
+        //    $("#addGroup").dialog({
+        //        autoOpen: false,
+        //        width: "auto",
+        //        show: {
+        //            effect: "blind",
+        //            duration: 1000
+        //        },
+        //        hide: {
+        //            effect: "explode",
+        //            duration: 1000
+        //        }
+        //    });
+
+        //    $("#btnAddGroup").click(function () {
+        //        $('#addGroup').dialog("open");
+        //        $('#createJoinGroup').dialog("close");
+
+        //    });
+        //});
+
+        //$('#btnCreateGroup').click(function () {
+        //    var selectedText = $('#tabs .ui-tabs-active').find('.ui-tabs-anchor')[0].innerHTML;
+        //    var groupName = $('#groupName').val();
+        //    var desc = $('#groupDesc').val();
+        //    Groups.groups.push({ groupName: groupName, description: desc });
+        //    $("#groupCalendar").show();
+        //    var num_tabs = $("#tabs ul li").length + 1;
+        //    $("#tabs ul").append("<li><a href='#groupCalendar' onclick='buildGroupCalendar()'>Group Calendar</a></li>");
+        //    $("#tabs").tabs("refresh");
+        //    $('#addGroup').dialog("close");
+        //});
+
+
+
         function buildMyCalendar() {
             ('#myCalendar').fullCalendar('destroy');
             ('#testCalendar').fullCalendar('destroy');
@@ -591,6 +774,13 @@
                 ('#csce101Calendar').fullCalendar('destroy');
                 addCSCE378Calendar(CSCE378CalendarEvents);
             };
+
+            function buildGroupCalendar() {
+                ('#myCalendar').fullCalendar('destroy');
+                ('#testCalendar').fullCalendar('destroy');
+                ('#groupCalendar').fullCalendar('destroy');
+                addGroupCalendar(groupCalendar);
+            };
     </script>
     <title></title>
 </head>
@@ -615,6 +805,28 @@
                 Create/<br />
                 Join Group</button>
         </div>
+
+    </div>
+
+     <div id="addGroup" title="Add Group">
+        Group Name:<input id="groupName" type="text" value="Group Name" />
+        <br /> <br />
+
+        Description:<input id ="groupDesc" type="text" value="Short Description" />
+        <br /> <br />
+
+        <button id="btnCreateGroup" style="float:right">Create</button>
+
+
+    </div>
+
+    <div id="createJoinGroup" title="Create/Join Group">
+        <br /> <br />
+        Groups:<select id="selectGroups"></select><button id="btnGroupSelect">Select</button>
+
+        <br /> <br />
+
+        <button id="btnAddGroup" style="float:right">Add Group</button>
 
     </div>
 
