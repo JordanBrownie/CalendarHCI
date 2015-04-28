@@ -34,6 +34,8 @@
   "July", "August", "September", "October", "November", "December"
         ];
 
+        var activeCalendar;
+
         var groupCalendar = {
 
             events: [
@@ -333,7 +335,18 @@
                 displayText += "End: " + moment(event.end).format('MMM Do h:mm A') + "<br>";
             }
             displayText += "Location: " + event.location + "<br>";
-            $("#eventContent").dialog({ modal: true, title: event.title, width: 350 });
+            $("#eventContent").dialog({
+                modal: true,
+                title: event.title,
+                width: 350,
+                buttons: {
+                    "Ok": function () { $(this).dialog("close"); },
+                    "Delete Event": function () {
+                        $(activeCalendar).fullCalendar('removeEvents', event._id);
+                        $(this).dialog("close");
+                    }
+                }
+            });
             $("#eventContent").dialog('open');
             $("#eventContent").dialog().html(displayText);
         }
@@ -655,14 +668,14 @@
                 $("#btnAddJoinGroup").click(function () {
                     $("#joinGroup").dialog("open");
                 });
+                $("#btnJoinGroup").click(function () {
+                    var groupName = $('#select-result').text();
+                    var num_tabs = $("#tabs ul li").length + 1;
+                    $("#tabs ul").append("<li><a href='#" + groupName + "Calendar' onclick='build" + groupName + "Calendar()'>" + groupName + " Calendar</a></li>");
+                    $("#tabs").tabs("refresh");
+                    $("#joinGroup").dialog("close");
+                });
             });
-        $("#btnJoinGroup").click(function () {
-            var groupName = $('#select-result').text();
-            var num_tabs = $("#tabs ul li").length + 1; 
-            $("#tabs ul").append("<li><a href='#" + groupName + "Calendar' onclick='build" + groupName + "Calendar()'>" + groupName + " Calendar</a></li>");
-            $("#tabs").tabs("refresh");
-            $("#joinGroup").dialog("close");
-        })
 
 
         //$(function () {
@@ -735,51 +748,40 @@
 
 
         function buildMyCalendar() {
-            ('#myCalendar').fullCalendar('destroy');
-            ('#testCalendar').fullCalendar('destroy');
-            ('#csce156Calendar').fullCalendar('destroy');
-            ('#csce378Calendar').fullCalendar('destroy');
-            ('#csce101Calendar').fullCalendar('destroy');
-            addMyCalendar(MyCalendarEvents);
+            
+            activeCalendar = "#myCalendar";
+            
         };
         function buildTestCalendar() {
-            ('#myCalendar').fullCalendar('destroy');
-            ('#testCalendar').fullCalendar('destroy');
-            ('#csce156Calendar').fullCalendar('destroy');
-            ('#csce378Calendar').fullCalendar('destroy');
-            ('#csce101Calendar').fullCalendar('destroy');
-            addTestCalendar(TestCalendarEvents);
+            
+            activeCalendar = "#testCalendar";
         };
         function buildCSCE101Calendar() {
-                ('#myCalendar').fullCalendar('destroy');
-                ('#testCalendar').fullCalendar('destroy');
-                ('#csce156Calendar').fullCalendar('destroy');
-                ('#csce378Calendar').fullCalendar('destroy');
-                ('#csce101Calendar').fullCalendar('destroy');
-                addCSCE101Calendar(CSCE101CalendarEvents);
-            };
+
+            activeCalendar = "#csce101Calendar";
+
+            setTimeout(function () {
+                $(".fc-today-button").trigger("click");
+            }, 1);
+        };
             function buildCSCE156Calendar() {
-                ('#myCalendar').fullCalendar('destroy');
-                ('#testCalendar').fullCalendar('destroy');
-                ('#csce156Calendar').fullCalendar('destroy');
-                ('#csce378Calendar').fullCalendar('destroy');
-                ('#csce101Calendar').fullCalendar('destroy');
-                addCSCE156Calendar(CSCE156CalendarEvents);
+
+                setTimeout(function () {
+                    $(".fc-today-button").trigger("click");
+                }, 1);
+                activeCalendar = "#csce156Calendar";
             };
             function buildCSCE378Calendar() {
-                ('#myCalendar').fullCalendar('destroy');
-                ('#testCalendar').fullCalendar('destroy');
-                ('#csce156Calendar').fullCalendar('destroy');
-                ('#csce378Calendar').fullCalendar('destroy');
-                ('#csce101Calendar').fullCalendar('destroy');
-                addCSCE378Calendar(CSCE378CalendarEvents);
+
+                setTimeout(function () {
+                    $(".fc-today-button").trigger("click");
+                }, 1);
+                activeCalendar = "#csce378Calendar";
             };
 
             function buildGroupCalendar() {
-                ('#myCalendar').fullCalendar('destroy');
-                ('#testCalendar').fullCalendar('destroy');
-                ('#groupCalendar').fullCalendar('destroy');
-                addGroupCalendar(groupCalendar);
+                
+                activeCalendar = "#groupCalendar";
             };
     </script>
     <title></title>
@@ -916,16 +918,10 @@
 
     </div>
 
-<<<<<<< HEAD
-    <div id="eventContent" title="Event Details" style="display: none;">
-        Start: <span id="startTime"></span>
-        <br>
-        <!--End: <span id="endTime"></span><br><br>-->
-=======
     <div id="eventContent" title="Event Details" style="display:none;">
         Start: <span id="startTime"></span><br>
         End: <span id="endTime"></span><br><br>
->>>>>>> origin/master
+        <div>Delete Event</div>
         <p id="location"></p>
     </div>
 
