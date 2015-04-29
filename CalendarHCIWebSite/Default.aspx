@@ -785,7 +785,7 @@
 
     </div>
 
-     <div id="addGroup" title="Add Group">
+    <%-- <div id="addGroup" title="Add Group">
         Group Name:<input id="groupName" type="text" value="Group Name" />
         <br /> <br />
 
@@ -805,7 +805,7 @@
 
         <button id="btnAddGroup" style="float:right">Add Group</button>
 
-    </div>
+    </div>--%>
 
     <div id="joinGroup" title="Join Group">
 
