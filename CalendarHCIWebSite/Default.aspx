@@ -334,12 +334,66 @@
                 displayText += "End: " + moment(event.end).format('MMM Do h:mm A') + "<br>";
             }
             displayText += "Location: " + event.location + "<br>";
+
+            var editText = "";
+            editText += "Start: " + moment(event.start).format('MMM Do h:mm A') + "<br>";
+            editText += "New Start Time: <input id=\"newStartTime\" type=\"time\"></input><br>";
+            if (event.end) {
+                editText += "End: " + moment(event.end).format('MMM Do h:mm A') + "<br>";
+                editText += "New End Time: <input id=\"newEndTime\" type=\"time\"></input><br>";
+            }
+            editText += "Location: " + event.location + "<br>";
+
+            var editing = false;
+
             $("#eventContent").dialog({
                 modal: true,
                 title: event.title,
                 width: 450,
                 buttons: {
-                    "Ok": function () { $(this).dialog("close"); },
+                    "Ok": function () {
+                        if (editing) {
+
+                            var newEvent = { title: event.title, location: event.location };
+
+                            if (event.repeat) {
+                                newEvent.repeat = event.repeat;
+                            }
+                            
+                            var startDay = event.start._i.split("T")[0] + "T" + $("#newStartTime").val();
+                            newEvent.start = startDay;
+
+                            if (event.end) {
+
+                                if (typeof event.end._i === 'string') {
+                                    var endDay = event.end._i.split("T")[0] + "T" + $("#newEndTime").val();
+                                    newEvent.end = endDay;
+                                } else {
+                                    var endMonth = event.end._i[1] + 1;
+                                    if (endMonth < 10) {
+                                        var endMonth1 = "0" + endMonth;
+                                    } else {
+                                        var endMonth1 = endMonth;
+                                    }
+                                    var endDay = event.end._i[0] + "-" + endMonth1 + "-" + event.end._i[2] + "T" + $("#newEndTime").val();
+                                    newEvent.end = endDay;
+                                }
+                            }
+                            $(activeCalendar).fullCalendar('removeEvents', event._id);
+                            
+                            $(activeCalendar).fullCalendar('renderEvent', newEvent, true);
+                        }
+                        $(this).dialog("close");
+                    },
+                    "Edit": function () {
+                        if (editing) {
+                            $(this).dialog().html(displayText);
+                            editing = false;
+                        } else {
+                            $(this).dialog().html(editText);
+                            editing = true;
+                        }
+                    },
                     "Delete Event": function () {
                         $(activeCalendar).fullCalendar('removeEvents', event._id);
                         $(this).dialog("close");
